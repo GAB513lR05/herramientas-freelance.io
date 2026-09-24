@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LatamRemoto - Finanzas, Trabajo Remoto y Calculadora Freelance LATAM</title>
+    <meta name="description" content="Calculadora de tarifas freelance multidivisa, guías de cobranza internacional (USD/EUR/Cryptos), empleo remoto y ciberseguridad para profesionales en Latinoamérica.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        accent: {
+                            50: '#f0f9ff',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS for specific elements -->
+    <style>
+        .active-nav-item {
+            background-color: #16a34a;
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+        .adsense-placeholder {
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .adsense-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #94a3b8;
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-bottom-left-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-full font-sans text-slate-800 antialiased">
+
+    <!-- TOP ADSENSE BANNER HEADER -->
+    <div class="bg-slate-100 border-b border-slate-200 py-2">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <!-- AdSense Unit Header (728x90 Banner) -->
+            <div class="adsense-placeholder w-full max-w-[728px] h-[90px] mx-auto rounded-lg my-1">
+                <span class="adsense-tag">Publicidad AdSense</span>
+                <p class="text-xs text-slate-400 font-mono mb-1">&lt;ins class="adsbygoogle" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890"&gt;&lt;/ins&gt;</p>
+                <p class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Bloque de Anuncio Superior (Leaderboard 728x90)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('inicio')">
+                    <div class="bg-emerald-500 text-slate-900 p-2 rounded-lg font-bold text-xl">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white">Latam<span class="text-emerald-400">Remoto</span></span>
+                        <span class="block text-[10px] text-slate-400 -mt-1">Finanzas & Freelance Latinoamérica</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Buttons -->
+                <nav class="hidden lg:flex space-x-1 text-sm font-medium">
+                    <button onclick="navigateTo('inicio')" id="nav-inicio" class="px-3 py-2 rounded-md hover:bg-slate-800 text-slate-300 transition-colors">
+                        <i class="fa-solid fa-house mr-1.5"></i>Inicio
+                    </button>
+                    <button onclick="navigateTo('calculadora')" id="nav-calculadora" class="px-3 py-2 rounded-md hover:bg-slate-800 text-slate-300 transition-colors">
+                        <i class="fa-solid fa-calculator mr-1.5 text-emerald-400"></i>Calculadora LATAM
+                    </button>
+                    <button onclick="navigateTo('empleo')" id="nav-empleo" class="px-3 py-2 rounded-md hover:bg-slate-800 text-slate-300 transition-colors">
+                        <i class="fa-solid fa-laptop-code mr-1.5"></i>Empleo Remoto
+                    </button>
+                    <button onclick="navigateTo('finanzas')" id="nav-finanzas" class="px-3 py-2 rounded-md hover:bg-slate-800 text-slate-300 transition-colors">
+                        <i class="fa-solid fa-money-bill-transfer mr-1.5"></i>Finanzas e Impuestos
+                    </button>
+                    <button onclick="navigateTo('seguridad')" id="nav-seguridad" class="px-3 py-2 rounded-md hover:bg-slate-800 text-slate-300 transition-colors">
+                        <i class="fa-solid fa-shield-halved mr-1.5"></i>Ciberseguridad
+                    </button>
+                    <button onclick="navigateTo('legales')" id="nav-legales" class="px-3 py-2 rounded-md hover:bg-slate-800 text-slate-300 transition-colors">
+                        <i class="fa-solid fa-scale-balanced mr-1.5"></i>Legales
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="p-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-800 border-t border-slate-700 px-2 pt-2 pb-3 space-y-1">
+            <button onclick="navigateTo('inicio')" class="w-full text-left px-3 py-2 rounded-md text-slate-200 hover:bg-slate-700">
+                <i class="fa-solid fa-house w-6"></i>Inicio
+            </button>
+            <button onclick="navigateTo('calculadora')" class="w-full text-left px-3 py-2 rounded-md text-emerald-400 font-semibold hover:bg-slate-700">
+                <i class="fa-solid fa-calculator w-6"></i>Calculadora Freelance LATAM
+            </button>
+            <button onclick="navigateTo('empleo')" class="w-full text-left px-3 py-2 rounded-md text-slate-200 hover:bg-slate-700">
+                <i class="fa-solid fa-laptop-code w-6"></i>Empleo Remoto Internacional
+            </button>
+            <button onclick="navigateTo('finanzas')" class="w-full text-left px-3 py-2 rounded-md text-slate-200 hover:bg-slate-700">
+                <i class="fa-solid fa-money-bill-transfer w-6"></i>Finanzas e Impuestos
+            </button>
+            <button onclick="navigateTo('seguridad')" class="w-full text-left px-3 py-2 rounded-md text-slate-200 hover:bg-slate-700">
+                <i class="fa-solid fa-shield-halved w-6"></i>Ciberseguridad
+            </button>
+            <button onclick="navigateTo('legales')" class="w-full text-left px-3 py-2 rounded-md text-slate-200 hover:bg-slate-700">
+                <i class="fa-solid fa-scale-balanced w-6"></i>Políticas & Legales
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER WITH SIDEBAR LAYOUT -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- MAIN CONTENT AREA (8 Cols on Desktop) -->
+            <main class="lg:col-span-8">
+
+                <!-- SECTION: INICIO / OVERVIEW -->
+                <section id="sec-inicio" class="spa-section space-y-6">
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+                        <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-semibold mb-4">
+                            Plataforma Regional para Latinoamérica
+                        </span>
+                        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">
+                            Calcula, Cobra y Exporta tus Servicios Remotos en LATAM
+                        </h1>
+                        <p class="text-slate-300 text-base sm:text-lg mb-6 leading-relaxed">
+                            Diseñado para profesionales independientes, freelancers y talentos digitales de México, Colombia, Argentina, Chile, Perú y toda Latinoamérica que prestan servicios hacia EE.UU., Europa y el mundo.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="navigateTo('calculadora')" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-5 py-3 rounded-xl transition shadow-lg flex items-center">
+                                <i class="fa-solid fa-calculator mr-2"></i>Calcular mi Tarifa en Moneda Local/USD
+                            </button>
+                            <button onclick="navigateTo('finanzas')" class="bg-slate-700 hover:bg-slate-600 text-white font-medium px-5 py-3 rounded-xl transition flex items-center">
+                                <i class="fa-solid fa-book-open mr-2"></i>Guía de Finanzas e Impuestos
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Hub Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div onclick="navigateTo('calculadora')" class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition">
+                            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-calculator text-lg"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 mb-1">Calculadora Multidivisa</h3>
+                            <p class="text-xs text-slate-500">Calcula tu precio bruto considerando PayPal, Stripe, Wise, Payoneer y retiro local.</p>
+                        </div>
+
+                        <div onclick="navigateTo('empleo')" class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition">
+                            <div class="w-10 h-10 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-laptop-code text-lg"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 mb-1">Trabajo Remoto Global</h3>
+                            <p class="text-xs text-slate-500">Aprende a posicionarte frente a clientes de EE.UU. y Europa desde América Latina.</p>
+                        </div>
+
+                        <div onclick="navigateTo('seguridad')" class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition">
+                            <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-shield-halved text-lg"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 mb-1">Protección & Contratos</h3>
+                            <p class="text-xs text-slate-500">Buenas prácticas de ciberseguridad, acuerdos de servicios y prevención de estafas.</p>
+                        </div>
+                    </div>
+
+                    <!-- In-Content AdSense Slot 1 -->
+                    <div class="adsense-placeholder w-full min-h-[120px] rounded-xl p-4 my-6">
+                        <span class="adsense-tag">Anuncio de Contenido</span>
+                        <p class="text-xs text-slate-400 font-mono mb-1">&lt;ins class="adsbygoogle" data-ad-format="fluid"&gt;&lt;/ins&gt;</p>
+                        <p class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Bloque de Anuncio In-Article / Adaptable</p>
+                    </div>
+
+                    <!-- Article Teasers -->
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                            <i class="fa-solid fa-earth-americas text-emerald-600 mr-2"></i>
+                            El Auge de la Exportación de Servicios en Latinoamérica
+                        </h2>
+                        <div class="prose prose-slate max-w-none text-slate-600 text-sm leading-relaxed space-y-3">
+                            <p>
+                                América Latina se ha consolidado como la región preferida para el reclutamiento remoto debido a la alineación de zonas horarias con Norteamérica, la afinidad cultural y la alta calidad técnica de sus profesionales.
+                            </p>
+                            <p>
+                                Sin embargo, cobrar de forma transfronteriza desde países como Argentina, Colombia, México o Perú implica lidiar con:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Comisiones de Cobro e Intermediación:</strong> Pasarelas como PayPal o Stripe pueden retener entre un 3.5% y un 8% del monto cobrado.</li>
+                                <li><strong>Conversión de Moneda y Tipo de Cambio:</strong> Las tasas de cambio del banco receptor suelen estar por debajo de la tasa media de mercado.</li>
+                                <li><strong>Obligaciones Fiscales Locales:</strong> Regulaciones para la repatriación de divisas e impuestos a la exportación de servicios.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION: CALCULADORA FREELANCE INTERACTIVA LATAM -->
+                <section id="sec-calculadora" class="spa-section hidden space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                        <div class="border-b border-slate-100 pb-4 mb-6">
+                            <h2 class="text-2xl font-extrabold text-slate-900 flex items-center">
+                                <i class="fa-solid fa-calculator text-emerald-600 mr-3"></i>
+                                Calculadora de Tarifa Freelance Internacional LATAM
+                            </h2>
+                            <p class="text-slate-500 text-sm mt-1">
+                                Selecciona tu moneda de trabajo y calcula cuánto debes cobrar para cubrir tus costos locales, comisiones internacionales e impuestos.
+                            </p>
+                        </div>
+
+                        <!-- Form GRID -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            
+                            <!-- Inputs Group -->
+                            <div class="space-y-4">
+                                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider text-emerald-700">1. Moneda y Metas Financieras</h3>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Moneda Base</label>
+                                        <select id="calc-currency" onchange="updateCurrencySymbols(); calculateFreelanceRate()"
+                                            class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                            <option value="USD" data-symbol="$" data-rate="1">USD ($ - Dólar US)</option>
+                                            <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€ - Euro)</option>
+                                            <option value="MXN" data-symbol="$" data-rate="17.2">MXN ($ - Peso MX)</option>
+                                            <option value="COP" data-symbol="$" data-rate="3900">COP ($ - Peso CO)</option>
+                                            <option value="ARS" data-symbol="$" data-rate="1050">ARS ($ - Peso AR)</option>
+                                            <option value="CLP" data-symbol="$" data-rate="940">CLP ($ - Peso CL)</option>
+                                            <option value="PEN" data-symbol="S/" data-rate="3.75">PEN (S/ - Sol PE)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">
+                                            Ingreso Neto Mensual Deseado
+                                        </label>
+                                        <div class="relative">
+                                            <span class="absolute left-3 top-2.5 text-slate-400 font-bold curr-symbol">$</span>
+                                            <input type="number" id="calc-target" value="1200" min="100" step="50" oninput="calculateFreelanceRate()"
+                                                class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-semibold">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">
+                                        Gastos Fijos Operativos Mensuales (Luz, Internet, Software)
+                                    </label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2.5 text-slate-400 font-bold curr-symbol">$</span>
+                                        <input type="number" id="calc-expenses" value="200" min="0" step="10" oninput="calculateFreelanceRate()"
+                                            class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    </div>
+                                </div>
+
+                                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider text-emerald-700 pt-2">2. Tiempo de Trabajo Real</h3>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Horas Facturables/Sem</label>
+                                        <input type="number" id="calc-hours-week" value="30" min="5" max="80" oninput="calculateFreelanceRate()"
+                                            class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Vacaciones (Semanas/Año)</label>
+                                        <input type="number" id="calc-vacation" value="4" min="0" max="12" oninput="calculateFreelanceRate()"
+                                            class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                    </div>
+                                </div>
+
+                                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider text-emerald-700 pt-2">3. Pasarela de Pago & Retiro</h3>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">
+                                        Pasarela / Plataforma Internacional
+                                    </label>
+                                    <select id="calc-fee-percent" onchange="calculateFreelanceRate()"
+                                        class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                        <option value="2">2% (USDT Cripto / Binance P2P / Transferencia Local)</option>
+                                        <option value="5" selected>5% (Payoneer / Wise + Retiro Banco Local LATAM)</option>
+                                        <option value="7">7% (PayPal / Stripe + Conversión de Moneda)</option>
+                                        <option value="12">12% (Plataformas de Freelance: Upwork / Fiverr / Workana)</option>
+                                        <option value="18">18% (Plataforma Freelance + PayPal + Banco Local)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">
+                                        Fondo de Impuestos y Contingencias (%)
+                                    </label>
+                                    <input type="range" id="calc-buffer" min="0" max="30" value="10" oninput="updateBufferLabel(); calculateFreelanceRate()" class="w-full accent-emerald-600">
+                                    <div class="flex justify-between text-xs text-slate-500">
+                                        <span>0%</span>
+                                        <span id="buffer-val-display" class="font-bold text-emerald-700">10%</span>
+                                        <span>30%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Live Results Display Box -->
+                            <div class="bg-slate-900 text-white rounded-xl p-6 flex flex-col justify-between shadow-inner">
+                                <div>
+                                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                                        <span class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Resumen de Cotización</span>
+                                        <span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-[10px] rounded font-mono">LATAM READY</span>
+                                    </div>
+
+                                    <div class="space-y-4">
+                                        <div>
+                                            <span class="text-xs text-slate-400 block">Tarifa Sugerida por Hora Mínima</span>
+                                            <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono mt-1" id="res-hourly-rate">
+                                                $0.00 <span class="text-sm text-slate-400 font-normal">/ hora</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-slate-800">
+                                            <div>
+                                                <span class="text-[11px] text-slate-400 block">Facturación Bruta Mensual</span>
+                                                <span class="text-base sm:text-lg font-bold text-white font-mono" id="res-gross-monthly">$0.00</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-[11px] text-slate-400 block">Total Comisiones e Impuestos</span>
+                                                <span class="text-base sm:text-lg font-bold text-rose-400 font-mono" id="res-total-fees">$0.00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="pt-2 border-t border-slate-800">
+                                            <span class="text-[11px] text-slate-400 block mb-1">Valor Sugerido Proyecto (10 Horas)</span>
+                                            <span class="text-xl font-bold text-sky-400 font-mono" id="res-project-rate">$0.00</span>
+                                        </div>
+
+                                        <!-- Progress breakdown -->
+                                        <div class="pt-3">
+                                            <div class="text-xs text-slate-400 flex justify-between mb-1">
+                                                <span>Distribución del Cobro:</span>
+                                            </div>
+                                            <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden flex">
+                                                <div id="bar-net" class="bg-emerald-500 h-full" style="width: 60%" title="Ingreso Neto"></div>
+                                                <div id="bar-expenses" class="bg-amber-500 h-full" style="width: 25%" title="Gastos Operativos"></div>
+                                                <div id="bar-fees" class="bg-rose-500 h-full" style="width: 15%" title="Comisiones e Impuestos"></div>
+                                            </div>
+                                            <div class="flex text-[10px] text-slate-400 space-x-3 mt-1.5">
+                                                <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-1"></span>Neto</span>
+                                                <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 mr-1"></span>Gastos</span>
+                                                <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-rose-500 mr-1"></span>Pasarelas/Fondo</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 pt-4 border-t border-slate-800 flex gap-2">
+                                    <button onclick="copyCalcSummary()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-lg transition flex items-center justify-center">
+                                        <i class="fa-solid fa-copy mr-1.5"></i>Copiar Propuesta de Tarifas
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- In-Content AdSense Slot 2 -->
+                    <div class="adsense-placeholder w-full min-h-[120px] rounded-xl p-4 my-6">
+                        <span class="adsense-tag">Anuncio de Contenido</span>
+                        <p class="text-xs text-slate-400 font-mono mb-1">&lt;ins class="adsbygoogle" data-ad-slot="8899001122"&gt;&lt;/ins&gt;</p>
+                        <p class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Bloque de Anuncio In-Article Bajo Calculadora</p>
+                    </div>
+                </section>
+
+                <!-- SECTION: GUIA EMPLEO REMOTO LATAM -->
+                <section id="sec-empleo" class="spa-section hidden space-y-6">
+                    <article class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                        <header class="border-b border-slate-100 pb-4 mb-6">
+                            <span class="px-2.5 py-1 bg-sky-100 text-sky-700 text-xs font-semibold rounded-md">Guía de Carrera LATAM</span>
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
+                                Conseguir Empleo Remoto Internacional desde América Latina
+                            </h1>
+                            <p class="text-slate-500 text-sm mt-1">Estrategias probadas para postularte en empresas de EE.UU., Canadá y Europa desde cualquier país latinoamericano.</p>
+                        </header>
+
+                        <div class="prose prose-slate max-w-none space-y-4 text-slate-700 text-sm leading-relaxed">
+                            <p>
+                                Trabajar de forma remota para empresas internacionales permite a los profesionales latinoamericanos acceder a salarios competitivos en moneda dura (USD o EUR) mientras mantienen el costo de vida local.
+                            </p>
+
+                            <h3 class="text-lg font-bold text-slate-900 mt-4 flex items-center">
+                                <i class="fa-solid fa-globe text-emerald-600 mr-2"></i> Plataformas Clave para Talentos de LATAM
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>Upwork & Fiverr:</strong> Las plataformas de freelancers más grandes del mundo. Requieren optimizar propuestas y mantener altas calificaciones de clientes (Top Rated).</li>
+                                <li><strong>Workana & GetonBoard:</strong> Plataformas enfocadas en el mercado hispanohablante y startups tecnológicas de América Latina.</li>
+                                <li><strong>Turing, Toptal & Braintrust:</strong> Redes de selección técnica de alto nivel para desarrolladores de software y diseñadores UX/UI.</li>
+                                <li><strong>LinkedIn Jobs & Remote.co:</strong> Ideales para posiciones a tiempo completo bajo esquemas *Contractor* (contratista independiente).</li>
+                            </ul>
+
+                            <!-- AdSense In-Article Placement -->
+                            <div class="adsense-placeholder w-full min-h-[100px] rounded-lg p-3 my-4">
+                                <span class="adsense-tag">Anuncio de Contenido</span>
+                                <p class="text-xs text-slate-400 font-mono">&lt;ins class="adsbygoogle" data-ad-slot="9988776655"&gt;&lt;/ins&gt;</p>
+                                <p class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Publicidad In-Text AdSense</p>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-slate-900 mt-4 flex items-center">
+                                <i class="fa-solid fa-file-contract text-emerald-600 mr-2"></i> Formatos de Contrato Frecuentes
+                            </h3>
+                            <p>
+                                La mayoría de las empresas internacionales contratan bajo la modalidad <strong>W-8BEN</strong> (para empresas de EE.UU.) o contratos de prestador de servicios *B2B*. Debes estar preparado para emitir facturas internacionales o comúnmente llamadas *Invoices*.
+                            </p>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- SECTION: GUIA FINANZAS E IMPUESTOS LATAM -->
+                <section id="sec-finanzas" class="spa-section hidden space-y-6">
+                    <article class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                        <header class="border-b border-slate-100 pb-4 mb-6">
+                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-md">Gestión Financiera LATAM</span>
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
+                                Finanzas, Cobros e Impuestos para Freelancers en LATAM
+                            </h1>
+                            <p class="text-slate-500 text-sm mt-1">Cómo recibir pagos internacionales, minimizar pérdidas cambiarias y cumplir legalmente.</p>
+                        </header>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <!-- Platform Card: Wise -->
+                            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-slate-800">Wise (Ex-TransferWise)</h4>
+                                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Baja Comisión</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mb-2">Permite disponer de datos bancarios locales en USD, EUR y GBP con el tipo de cambio real del mercado.</p>
+                                <span class="text-[11px] text-slate-500 font-mono">Comisión: Muy reducida (0.4% - 1.5%)</span>
+                            </div>
+
+                            <!-- Platform Card: Payoneer -->
+                            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-slate-800">Payoneer</h4>
+                                    <span class="text-xs bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-semibold">Integración Global</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mb-2">Ideal para cobrar directamente desde Upwork, Fiverr y clientes corporativos con tarjeta de débito internacional.</p>
+                                <span class="text-[11px] text-slate-500 font-mono">Comisión: ~3% por recepción/retiro</span>
+                            </div>
+
+                            <!-- Platform Card: PayPal / Stripe -->
+                            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-slate-800">PayPal / Stripe</h4>
+                                    <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Tarjetas de Crédito</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mb-2">Útil para cobrar a clientes finales mediante tarjeta, aunque con mayores comisiones por conversión.</p>
+                                <span class="text-[11px] text-slate-500 font-mono">Comisión: 4.5% a 7% + costo fijo</span>
+                            </div>
+
+                            <!-- Platform Card: Binance & USDT -->
+                            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-slate-800">Criptoestables (USDT/USDC)</h4>
+                                    <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-semibold">P2P Regional</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mb-2">Muy popular en Argentina, Colombia y México para convertir moneda dura directamente a banco local vía P2P.</p>
+                                <span class="text-[11px] text-slate-500 font-mono">Comisión: < 1% en P2P</span>
+                            </div>
+                        </div>
+
+                        <!-- AdSense In-Article Placement -->
+                        <div class="adsense-placeholder w-full min-h-[100px] rounded-lg p-3 my-4">
+                            <span class="adsense-tag">Anuncio de Contenido</span>
+                            <p class="text-xs text-slate-400 font-mono">&lt;ins class="adsbygoogle" data-ad-slot="3344556677"&gt;&lt;/ins&gt;</p>
+                            <p class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Publicidad In-Text AdSense</p>
+                        </div>
+
+                        <div class="prose prose-slate max-w-none text-slate-700 text-sm space-y-3">
+                            <h3 class="text-lg font-bold text-slate-900">Consideraciones Fiscales por País</h3>
+                            <p>
+                                Cada país latinoamericano posee figuras tributarias simplificadas para prestadores de servicios independientes:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>México:</strong> Regimen Simplificado de Confianza (RESICO) con tasas muy reducidas para exportadores de servicios.</li>
+                                <li><strong>Colombia:</strong> Régimen Simple de Tributación (RST) e inscripción en el RUT como prestador de servicios.</li>
+                                <li><strong>Argentina:</strong> Monotributo / Monotributo Tech para facturación de servicios al exterior.</li>
+                                <li><strong>Chile y Perú:</strong> Emisión de Boletas de Honorarios electrónicas.</li>
+                            </ul>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- SECTION: GUIA CIBERSEGURIDAD LATAM -->
+                <section id="sec-seguridad" class="spa-section hidden space-y-6">
+                    <article class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                        <header class="border-b border-slate-100 pb-4 mb-6">
+                            <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-md">Protección Digital</span>
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
+                                Ciberseguridad & Protección Financiera Freelance
+                            </h1>
+                            <p class="text-slate-500 text-sm mt-1">Garantiza la seguridad de tus cuentas bancarias, credenciales de clientes y contratos.</p>
+                        </header>
+
+                        <div class="space-y-4 text-slate-700 text-sm">
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-start space-x-3">
+                                <i class="fa-solid fa-shield-cat text-xl text-indigo-600 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">1. Gestores de Contraseñas y 2FA Encriptado</h4>
+                                    <p class="text-xs text-slate-600 mt-1">
+                                        Utiliza administradores de claves encriptados como Bitwarden o 1Password para compartir credenciales con clientes de forma segura sin revelar contraseñas en texto plano.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-start space-x-3">
+                                <i class="fa-solid fa-file-shield text-xl text-indigo-600 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">2. Contratos de Confidencialidad (NDA) y Acuerdos de Trabajo</h4>
+                                    <p class="text-xs text-slate-600 mt-1">
+                                        Antes de iniciar cualquier proyecto fuera de plataformas con custodia (*Escrow*), firma un contrato simple que defina alcances, fechas de pago e hitos claros para evitar impagos.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-start space-x-3">
+                                <i class="fa-solid fa-network-wired text-xl text-indigo-600 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">3. Conexiones Seguras en Redes Públicas</h4>
+                                    <p class="text-xs text-slate-600 mt-1">
+                                        Si trabajas desde cafeterías o espacios de *coworking*, utiliza siempre una conexión VPN privada para proteger la información confidencial de tus clientes.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- SECTION: LEGALES Y POLITICAS GLOBAL LATAM -->
+                <section id="sec-legales" class="spa-section hidden space-y-6">
+                    <article class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                        <header class="border-b border-slate-100 pb-4 mb-6">
+                            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Cumplimiento Legal AdSense</span>
+                            <h1 class="text-2xl font-extrabold text-slate-900 mt-2">
+                                Política de Privacidad, Términos y Galletas (Cookies)
+                            </h1>
+                            <p class="text-slate-500 text-xs mt-1">Válido para Latinoamérica y Regulaciones de Privacidad Internacionales</p>
+                        </header>
+
+                        <div class="prose prose-slate max-w-none text-slate-600 text-xs space-y-4 leading-relaxed">
+                            <h3 class="text-sm font-bold text-slate-800">1. Política de Privacidad Global</h3>
+                            <p>
+                                En <strong>LatamRemoto</strong>, accesible a través de nuestra web, protegemos la privacidad de nuestros usuarios en todos los países de Latinoamérica. Esta política detalla la recopilación de datos no sensibles con fines analíticos y de mejora de experiencia.
+                            </p>
+
+                            <h3 class="text-sm font-bold text-slate-800">2. Cookies de Terceros y Publicidad de Google AdSense</h3>
+                            <p>
+                                Este sitio web utiliza cookies de terceros, incluidas las cookies de Google DoubleClick DART, para mostrar anuncios relevantes basados en las visitas previas del usuario a nuestro sitio web o a otros sitios web en Internet.
+                            </p>
+                            <p>
+                                Los usuarios de Latinoamérica y del resto del mundo pueden inhabilitar el uso de la cookie de DART para la publicidad basada en intereses visitando la política de privacidad de la red de anuncios de Google: <a href="https://policies.google.com/technologies/ads" class="text-emerald-600 underline" target="_blank">https://policies.google.com/technologies/ads</a>.
+                            </p>
+
+                            <h3 class="text-sm font-bold text-slate-800">3. Exención de Responsabilidad Financiera</h3>
+                            <p>
+                                Los cálculos proporcionados por nuestra herramienta multidivisa son estimaciones orientativas. LatamRemoto no opera como entidad financiera ni ofrece asesoramiento tributario formal.
+                            </p>
+                        </div>
+                    </article>
+                </section>
+
+            </main>
+
+            <!-- SIDEBAR AREA (4 Cols on Desktop) -->
+            <aside class="lg:col-span-4 space-y-6">
+                
+                <!-- ADSENSE SIDEBAR BANNER (300x250 Medium Rectangle) -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Publicidad AdSense</span>
+                    
+                    <div class="adsense-placeholder w-full h-[250px] sm:h-[300px] rounded-xl my-1">
+                        <span class="adsense-tag">Anuncio Lateral</span>
+                        <p class="text-xs text-slate-400 font-mono mb-1">&lt;ins class="adsbygoogle" data-ad-slot="5566778899"&gt;&lt;/ins&gt;</p>
+                        <p class="text-xs text-slate-500 font-semibold px-4"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Bloque Sidebar (300x250 / Flex)</p>
+                    </div>
+                </div>
+
+                <!-- QUICK CURRENCY ESTIMATOR WIDGET -->
+                <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-sm">
+                    <h3 class="font-bold text-base mb-2 flex items-center text-emerald-400">
+                        <i class="fa-solid fa-calculator mr-2"></i> Convertidor Rápido de Divisas
+                    </h3>
+                    <p class="text-xs text-slate-300 mb-4">Calcula la conversión de un monto en USD a la divisa seleccionada.</p>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-[11px] text-slate-400 block mb-1">Monto en Dólares (USD $)</label>
+                            <input type="number" id="quick-usd" value="100" oninput="quickConvert()" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-slate-400 block mb-1">Divisa Destino</label>
+                            <select id="quick-target-curr" onchange="quickConvert()" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm text-white focus:outline-none">
+                                <option value="17.2" data-symbol="$">MXN (Peso Mexicano)</option>
+                                <option value="3900" data-symbol="$">COP (Peso Colombiano)</option>
+                                <option value="1050" data-symbol="$">ARS (Peso Argentino)</option>
+                                <option value="940" data-symbol="$">CLP (Peso Chileno)</option>
+                                <option value="3.75" data-symbol="S/">PEN (Sol Peruano)</option>
+                                <option value="0.92" data-symbol="€">EUR (Euro)</option>
+                            </select>
+                        </div>
+                        <div class="pt-2 border-t border-slate-800">
+                            <span class="text-xs text-slate-400">Monto Estimado Convertido:</span>
+                            <div class="text-xl font-mono font-bold text-emerald-400" id="quick-curr-res">$1,720.00 MXN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADSENSE STICKY SIDEBAR BANNER 2 -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center sticky top-20">
+                    <span class="text-xs font-semibold text-slate-400 block mb-2">Anuncio Destacado</span>
+                    
+                    <div class="adsense-placeholder w-full h-[250px] rounded-xl my-1">
+                        <span class="adsense-tag">AdSense Sticky</span>
+                        <p class="text-xs text-slate-400 font-mono mb-1">&lt;ins class="adsbygoogle" data-ad-slot="9900112233"&gt;&lt;/ins&gt;</p>
+                        <p class="text-xs text-slate-500 font-semibold px-4"><i class="fa-solid fa-rectangle-ad text-emerald-600 mr-1"></i> Bloque Lateral Fijo (300x250)</p>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-auto text-xs py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div>
+                    <span class="text-white font-bold text-base block mb-2">Latam<span class="text-emerald-400">Remoto</span></span>
+                    <p class="text-slate-400 text-xs">
+                        Portal educativo para la comunidad de freelancers y trabajadores remotos de Latinoamérica.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-2">Navegación</h4>
+                    <ul class="space-y-1">
+                        <li><button onclick="navigateTo('calculadora')" class="hover:text-emerald-400">Calculadora Multidivisa</button></li>
+                        <li><button onclick="navigateTo('empleo')" class="hover:text-emerald-400">Trabajo Remoto Global</button></li>
+                        <li><button onclick="navigateTo('finanzas')" class="hover:text-emerald-400">Pasarelas e Impuestos LATAM</button></li>
+                        <li><button onclick="navigateTo('seguridad')" class="hover:text-emerald-400">Ciberseguridad</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-2">Transparencia</h4>
+                    <ul class="space-y-1">
+                        <li><button onclick="navigateTo('legales')" class="hover:text-emerald-400">Política de Privacidad</button></li>
+                        <li><button onclick="navigateTo('legales')" class="hover:text-emerald-400">Política de Cookies</button></li>
+                        <li><button onclick="navigateTo('legales')" class="hover:text-emerald-400">Aviso AdSense</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-4 text-center text-slate-500">
+                <p>&copy; 2026 LatamRemoto. Todos los derechos reservados. Diseñado para optimizar la rentabilidad en América Latina y cumplir con las directrices de Google AdSense.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COOKIE CONSENT BANNER -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-slate-900/95 text-white p-4 border-t border-emerald-500 z-50 shadow-2xl backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-xs text-slate-300">
+                <p>
+                    <i class="fa-solid fa-cookie-bite text-emerald-400 text-sm mr-1.5"></i>
+                    Usamos cookies propias y de terceros (Google AdSense) para personalizar publicidad y medir tráfico en Latinoamérica. Al navegar aceptas nuestra <button onclick="navigateTo('legales')" class="underline text-emerald-400">Política de Cookies y Privacidad</button>.
+                </p>
+            </div>
+            <div class="flex gap-2 shrink-0">
+                <button onclick="acceptCookies()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition">
+                    Aceptar y Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed top-20 right-5 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-lg text-xs font-semibold hidden z-50 transition transform">
+        <i class="fa-solid fa-circle-check mr-2"></i> <span id="toast-msg">Mensaje</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC (SPA Navigation + Multicurrency Engine) -->
+    <script>
+        // --- 1. SPA ROUTING SYSTEM ---
+        function navigateTo(sectionId) {
+            const sections = document.querySelectorAll('.spa-section');
+            sections.forEach(sec => sec.classList.add('hidden'));
+
+            const navButtons = document.querySelectorAll('header nav button');
+            navButtons.forEach(btn => btn.classList.remove('active-nav-item'));
+
+            const targetSection = document.getElementById('sec-' + sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+
+            const activeNavBtn = document.getElementById('nav-' + sectionId);
+            if (activeNavBtn) {
+                activeNavBtn.classList.add('active-nav-item');
+            }
+
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // --- 2. MULTICURRENCY FREELANCE CALCULATOR ---
+        function updateCurrencySymbols() {
+            const select = document.getElementById('calc-currency');
+            const selectedOption = select.options[select.selectedIndex];
+            const symbol = selectedOption.getAttribute('data-symbol') || '$';
+
+            const symbols = document.querySelectorAll('.curr-symbol');
+            symbols.forEach(el => el.innerText = symbol);
+        }
+
+        function updateBufferLabel() {
+            const buffer = document.getElementById('calc-buffer').value;
+            document.getElementById('buffer-val-display').innerText = buffer + '%';
+        }
+
+        function calculateFreelanceRate() {
+            const select = document.getElementById('calc-currency');
+            const selectedOption = select.options[select.selectedIndex];
+            const symbol = selectedOption.getAttribute('data-symbol') || '$';
+            const currCode = select.value;
+
+            const targetNet = parseFloat(document.getElementById('calc-target').value) || 0;
+            const fixedExpenses = parseFloat(document.getElementById('calc-expenses').value) || 0;
+            const hoursPerWeek = parseFloat(document.getElementById('calc-hours-week').value) || 1;
+            const vacationWeeks = parseFloat(document.getElementById('calc-vacation').value) || 0;
+            const feePercent = parseFloat(document.getElementById('calc-fee-percent').value) || 0;
+            const bufferPercent = parseFloat(document.getElementById('calc-buffer').value) || 0;
+
+            const workingWeeksYear = Math.max(1, 52 - vacationWeeks);
+            const workingMonthsYear = 12;
+            const monthlyWorkingHours = (hoursPerWeek * workingWeeksYear) / workingMonthsYear;
+
+            const subtotalNeeded = targetNet + fixedExpenses;
+
+            const totalPercentDeduction = (feePercent + bufferPercent) / 100;
+            const grossMonthly = subtotalNeeded / Math.max(0.01, (1 - totalPercentDeduction));
+
+            const hourlyRate = grossMonthly / Math.max(1, monthlyWorkingHours);
+            const projectRate = hourlyRate * 10;
+            const totalFeesAndBuffer = grossMonthly - subtotalNeeded;
+
+            document.getElementById('res-hourly-rate').innerHTML = symbol + hourlyRate.toFixed(2) + ' <span class="text-sm text-slate-400 font-normal">/ hora (' + currCode + ')</span>';
+            document.getElementById('res-gross-monthly').innerText = symbol + grossMonthly.toFixed(2) + ' ' + currCode;
+            document.getElementById('res-total-fees').innerText = symbol + totalFeesAndBuffer.toFixed(2) + ' ' + currCode;
+            document.getElementById('res-project-rate').innerText = symbol + projectRate.toFixed(2) + ' ' + currCode;
+
+            const netPct = (targetNet / grossMonthly) * 100;
+            const expPct = (fixedExpenses / grossMonthly) * 100;
+            const feePct = (totalFeesAndBuffer / grossMonthly) * 100;
+
+            document.getElementById('bar-net').style.width = netPct + '%';
+            document.getElementById('bar-expenses').style.width = expPct + '%';
+            document.getElementById('bar-fees').style.width = feePct + '%';
+        }
+
+        function copyCalcSummary() {
+            const select = document.getElementById('calc-currency');
+            const currCode = select.value;
+            const hourly = document.getElementById('res-hourly-rate').innerText.split('/')[0].trim();
+            const gross = document.getElementById('res-gross-monthly').innerText;
+            
+            const textToCopy = `Propuesta de Honorarios Freelance (${currCode}):\n- Tarifa Mínima por Hora: ${hourly}\n- Meta Facturación Mensual Bruta: ${gross}\nGenerado con la Calculadora LATAM de LatamRemoto.`;
+
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = textToCopy;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            showToast("Propuesta copiada al portapapeles");
+        }
+
+        // --- 3. QUICK SIDEBAR CONVERTER ---
+        function quickConvert() {
+            const usd = parseFloat(document.getElementById('quick-usd').value) || 0;
+            const select = document.getElementById('quick-target-curr');
+            const selectedOpt = select.options[select.selectedIndex];
+            const rate = parseFloat(select.value) || 1;
+            const symbol = selectedOpt.getAttribute('data-symbol') || '$';
+            const currName = selectedOpt.text.split(' ')[0];
+
+            const total = usd * rate;
+            document.getElementById('quick-curr-res').innerText = symbol + total.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + currName;
+        }
+
+        // --- 4. COOKIE BANNER & TOAST HELPERS ---
+        function acceptCookies() {
+            document.getElementById('cookie-banner').style.display = 'none';
+            localStorage.setItem('latam_cookies_accepted', 'true');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // --- 5. INITIALIZATION ---
+        window.onload = function() {
+            navigateTo('inicio');
+            updateCurrencySymbols();
+            calculateFreelanceRate();
+            quickConvert();
+
+            if (localStorage.getItem('latam_cookies_accepted') === 'true') {
+                const banner = document.getElementById('cookie-banner');
+                if (banner) banner.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+```
